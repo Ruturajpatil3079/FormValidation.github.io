@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include Select2 CSS and JS files -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <title>Document</title>
+
+    <style>
+        body {
+            background-color: #1D0423;
+            color: #fff; /* Set text color to white */
+        }
+    
+        .container {
+            margin-top: 50px;
+        }
+    
+        .card {
+            background-color: #fff; /* Set card background color to white */
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        .form-control {
+            border: 2px solid #ced4da; 
+        }
+    
+    
+        .error {
+            color: #dc3545; /* Set error message color to red */
+            /* margin-top: 5px; */
+        }
+
+        /* .msg {
+            font-size: 10px; 
+        } */
+    
+        .form-control.success {
+            border-color: #28a745; /* Set border color to green for success */
+        }
+
+        .error-message{
+            font-size: 12px;
+            color: #dc3545; 
+        }
+    
+       
+
+        .select2-results__option{
+            color: black;
+        }
+
+        .select2-container--default .select2-selection--single{
+            height: 35px;
+            width: 150px;
+            border: 2px solid #ced4da;
+            margin-top: 2px;
+
+        }
+        
+        .select2-container--default .select2-selection--single
+        .select2-selection__arrow{
+            height: 26px;
+    position: absolute;
+    top: 6px;
+    right: 35px;
+    width: 20px;
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 0 50px 0 50px;
+  }
+}
+        
+    </style>
+    
+
+</head>
+<body>
+    <div class="container">
+        <form action="result.php" method="post" id="myForm" name="myForm">
+            <div class="mx-auto mt-5 mb-5 col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Registration Form</h3>
+                        <div class="mb-2">
+                            <label class="form-label">Enter Your First Name</label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter First Name">
+                            <div class="error">
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Enter Your Last Name</label>
+                            <input type="text" class="form-control" name="lname" id="lname" placeholder="Enter Last Name">
+                            <div class="error">
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="email" class="form-label">Enter Your Email ID</label>
+                            <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email ID">
+                            <div class="error">
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+
+                        <div class=" row mb-2">
+                            <div class="col-md-4 dropdown" >
+                                <label class="form-label">Country Code</label>                            
+                                <select id="countryCode" class="form-control form-select" aria-label="Default select example">
+                                    <option value="">Code</option>
+                                    <option value="+91">India +91</option>
+                                    <option value="+1">USA +1</option>
+                                    <option value="+44">Thiland +44</option>  
+                                  </select>                    
+                                <div class="error">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <label for="mobile" class="form-label">Mobile Number</label>
+                                <input type="number" class="form-control" name="mobile" id="mobile" placeholder="Enter Mobile Number">
+                                <div class="error">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                        </div>
+               
+
+                         <div class="mb-2">
+                            <label class="form-label">Date Of Birth</label>
+                            <input type="date" class="form-control" name="date" id="date">
+                            <div class="error">
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="gender" class="form-label">Gender :</label>
+                            <input type="radio" id="gender" name="gender" value="male"> Male
+                            <input type="radio" id="gender" name="gender" value="female"> Female                            
+                                <span class="error-message"></span>
+                            </div>                     
+
+                
+                            <div class="mb-2 dropdown">
+                                <label class="form-label">State</label>
+                                <select id="stateDropdown" class="form-select" aria-label="Default select example">
+                                    <option selected>Select State</option>
+                                    <option value="1">Maharashtra</option>
+                                    <option value="2">Karnataka</option>
+                                    <option value="3">Gujarat</option>
+                                    <option value="4">Uttar Pradesh</option>
+                                </select>
+                                <div class="error">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="collapse row mb-2" id="collapseExample1">
+                                <div class="col-md-6">
+                                    <label class="form-label">City</label>
+                                <select id="City" class="form-select" aria-label="Default select example">
+                                    <option selected>Kolhapur</option>
+                                    <option value="1">Sangli</option>
+                                    <option value="2">Kagal</option>
+                                    <option value="3">Radhanagri</option>
+                                </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="mobile" class="form-label">Pin Code</label>
+                                    <input type="number" class="form-control" name="pincode" id="pincode" placeholder="000-000">
+                                    <div class="error">
+                                        <span class="error-message"></span>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            
+                            <div class="collapse row mb-2" id="collapseExample2">
+                                <div class="col-md-6">
+                                <label class="form-label">City</label>
+                                <select id="City" class="form-select" aria-label="Default select example">
+                                    <option selected>Bengaluru</option>
+                                    <option value="1">Belagavi</option>
+                                    <option value="2">Mysuru</option>
+                                    <option value="3">Dharwad</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="mobile" class="form-label">Pin Code</label>
+                                <input type="number" class="form-control" name="pincode" id="pincode" placeholder="000-000">
+                                <div class="error">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                            </div>
+                            
+                            <div class="collapse row mb-2" id="collapseExample3">
+                                <div class="col-md-6">
+                                <label class="form-label">City</label>
+                                <select id="City" class="form-select" aria-label="Default select example">
+                                    <option selected>Surat</option>
+                                    <option value="1">Ahmedabad</option>
+                                    <option value="2">Vadodara</option>
+                                    <option value="3">Rajkot</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="mobile" class="form-label">Pin Code</label>
+                                <input type="number" class="form-control" name="pincode" id="pincode" placeholder="000-000">
+                                <div class="error">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="collapse row mb-2" id="collapseExample4">
+                                <div class="col-md-6">
+                                <label class="form-label">City</label>
+                                <select id="City" class="form-select" aria-label="Default select example">
+                                    <option selected>Ayodhya</option>
+                                    <option value="1">Noida</option>
+                                    <option value="2">Lucknow</option>
+                                    <option value="3">Varanasi</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="mobile" class="form-label">Pin Code</label>
+                                <input type="number" class="form-control" name="pincode" id="pincode" placeholder="000-000">
+                                <div class="error">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" name="uname" id="uname" placeholder="eg. abc@03">
+                                <div class="error">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Password should be min 8 character and include special symbols">
+                                <div class="error">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" name="confpassword" id="confpassword" placeholder="Enter Password again">
+                                <div class="error">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+
+                        <button class="btn btn-primary mt-2" id="bttn" type="button">Submit</button>
+                        <button class="btn btn-danger mt-2" type="reset">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+     <script>
+        //  $(document).ready(function() {
+        //     // Initialize Select2
+        //     $('#countryCode').select2();
+        // });
+        const form = document.getElementById('myForm');
+        const nameInput = document.getElementById('name');
+        const lnameInput = document.getElementById('lname');        
+        const emailInput = document.getElementById("email");
+        const ccodeInput = document.getElementById("countryCode");
+        const mnumberInput = document.getElementById("mobile");
+        const dateInput = document.getElementById("date");
+        const unameInput = document.getElementById("uname");
+        const genderInput = document.getElementById("gender");
+        const stateDropdown = document.getElementById('stateDropdown');
+        const pcodeInput = document.getElementById('pincode');
+        const passwordInput = document.getElementById('password');
+        const confpasswordInput = document.getElementById('confpassword');
+        const submitButton = document.querySelector('button[id="bttn"]');
+
+
+
+        //state dropdown
+    const collapseExample1 = document.getElementById('collapseExample1');
+    const collapseExample2 = document.getElementById('collapseExample2');
+    const collapseExample3 = document.getElementById('collapseExample3');
+    const collapseExample4 = document.getElementById('collapseExample4');
+
+
+
+
+    stateDropdown.addEventListener('change', function () {
+        // Hide all collapse elements
+        collapseExample1.classList.remove('show');
+        collapseExample2.classList.remove('show');
+        collapseExample3.classList.remove('show');
+        collapseExample4.classList.remove('show');
+
+        // Show the selected collapse element
+        const selectedValue = stateDropdown.value;
+        const selectedCollapse = document.getElementById(`collapseExample${selectedValue}`);
+        selectedCollapse.classList.add('show');
+    });
+
+        //
+
+    
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            validateInputs();
+        });
+    
+        nameInput.addEventListener('input', () => validateInput(nameInput));
+        lnameInput.addEventListener('input', () => validateInput(lnameInput));
+        emailInput.addEventListener('input', () => validateInput(emailInput));
+        ccodeInput.addEventListener('input', () => validateInput(ccodeInput));
+        mnumberInput.addEventListener('input', () => validateInput(mnumberInput));
+        dateInput.addEventListener('input', () => validateInput(dateInput));
+        unameInput.addEventListener('input', () => validateInput(unameInput));
+        genderInput.addEventListener('input', () => validateInput(genderInput));
+        stateDropdown.addEventListener('input', () => validateInput(stateDropdown));
+        pcodeInput.addEventListener('input', () => validateInput(pcodeInput));
+        passwordInput.addEventListener('input', () => validateInput(passwordInput));
+        confpasswordInput.addEventListener('input', () => validateInput(confpasswordInput));
+        
+        submitButton.addEventListener('click', () => {
+            validateInputs();
+        });
+    
+        const setError = (element, message) => {
+            const errorDisplay = element.parentElement.querySelector('.error-message');
+    
+            errorDisplay.innerText = message;
+            element.classList.add('error');
+            element.classList.remove('success');
+        };
+    
+        const setSuccess = (element, message) => {
+            const errorDisplay = element.parentElement.querySelector('.error-message');
+    
+            errorDisplay.innerText = message;
+            element.classList.add('success');
+            element.classList.remove('error');
+        };
+    
+        const validateInputs = () => {
+            validateInput(nameInput);
+            validateInput(lnameInput);
+            validateInput(emailInput);
+            validateInput(ccodeInput);
+            validateInput(mnumberInput);
+            validateInput(dateInput);
+            validateInput(unameInput);
+            validateInput(genderInput);
+            validateInput(stateDropdown);
+            validateInput(pcodeInput);
+            validateInput(passwordInput);
+            validateInput(confpasswordInput);
+            // Add additional validations as needed
+            // ...
+    
+            // Check if there are any error classes remaining in the form
+            const errors = form.querySelectorAll('.error');
+            if (errors.length === 0) {
+                // If no errors, submit the form
+                form.submit();
+                
+            }
+        };
+    
+        const validateInput = (inputElement) => {
+            const value = inputElement.value.trim();
+            const errorDisplay = inputElement.parentElement.querySelector('.error-message');
+    
+            // Reset previous error or success messages
+            errorDisplay.innerText = '';
+    
+            if (value === '') {
+                setError(inputElement, '* This field is required');
+            } else {
+                setSuccess(inputElement, '');
+            }
+    
+            // Add specific validation for name if needed
+            // Example: check if the name contains only letters
+            if (inputElement === nameInput) {
+                if (!isValidName(value)) {
+                    setError(inputElement, '* Provide a valid name');
+                }
+            }
+            else if (inputElement === lnameInput) {
+                if (!isValidlName(value)) {
+                    setError(inputElement, '* Provide a valid last name');
+                }
+            }
+            else if (inputElement === emailInput) {
+                if (!isValidEmail(value)) {
+                    setError(inputElement, '* Provide a correct email');
+                }
+            }
+                else if (inputElement === ccodeInput) {
+            // Check if a country code is selected
+            if (!isValidCcode(value)) {
+                setError(inputElement, 'Select a valid country code');
+            } else {
+                setSuccess(inputElement, '');
+            }
+            }
+
+            else if (inputElement === stateDropdown || inputElement.id === 'stateDropdown') {
+                // Check if a state is selected
+                if (!isValidState(value)) {
+                    setError(inputElement, 'Select your State');
+                } else {
+                    setSuccess(inputElement, '');
+                }
+            }
+
+                    else if (inputElement === mnumberInput) {
+                        if (value.length !== 10 || !/^[89]\d{9}$/.test(value)) {
+                            setError(inputElement, '* Number should start with 8 or 9 and be 10 digits');
+                        }
+                        
+                    }
+                    else if (inputElement === unameInput) {
+                        if (!isValidUname(value)) {
+                            setError(inputElement, '* Provide a Unique Username');
+                        }
+                    }
+                    else if (inputElement === genderInput) {
+                        if (!validateGender(value)) {
+                            setError(inputElement, '* Select Gender');
+                        }
+                    }
+
+                    else if (inputElement === passwordInput) {
+                        if (!isValidatePassword(value)) {
+                            setError(inputElement, '* min 8 characters and include at least one letter, one number, and one special character');
+                        } else {
+                            setSuccess(inputElement, '');
+                        }
+                    } else if (inputElement === confpasswordInput) {
+                        const passwordValue = passwordInput.value.trim();
+                        if (!isValidatePassword(value)) {
+                            setError(inputElement, '* Password is not the same');
+                        } else if (value !== passwordValue) {
+                            setError(inputElement, '* Password is not the same');
+                        } else {
+                            setSuccess(inputElement, '');
+                        }
+                    }
+                    else if (inputElement === pcodeInput) {
+                        if (!isValidatePcode(value)) {
+                            setError(inputElement, '* 6 digit code');
+                        } else {
+                            setSuccess(inputElement, '');
+                        }
+                    }
+
+
+        };
+    
+        // Add your specific validation functions if needed
+        function isValidName(name) {
+            // Implement your name validation logic
+            return /^[a-zA-Z]+$/.test(name);
+        }
+        function isValidlName(lname) {
+            // Implement your name validation logic
+            return /^[a-zA-Z]+$/.test(lname);
+        }
+        
+
+        const isValidEmail = (email) => {
+            const re = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
+            return re.test(String(email).toLowerCase());
+        };
+        function isValidCcode(countryCode) {
+    // Implement your country code validation logic
+    return countryCode !== ""; // Check if a country code is selected
+}
+
+        function isValidUname(uname) {
+            // Implement your name validation logic
+            return /^[a-zA-Z]+@[0-9]+[0-9]$/.test(uname);
+        }
+
+        function validateGender() {
+    const maleCheckbox = document.getElementById('gender');
+    const femaleCheckbox = document.getElementById('gender');
+    
+    if (!maleCheckbox.checked && !femaleCheckbox.checked) {
+        setError(maleCheckbox, 'Select at least one gender');
+        return false;
+    } else {
+        setSuccess(maleCheckbox, '');
+        return true;
+    }
+}
+
+    function isValidState(state) {
+        // Implement your state validation logic
+        return state !== "Select State"; // Update the condition based on your actual default value
+    }
+
+    function isValidatePcode(pcodeInput) {
+    // Implement your password validation logic
+    return /^[0-9].{5,}$/.test(pcodeInput);
+}
+    function isValidatePassword(passwordInput) {
+    // Implement your password validation logic
+    return /^(?=.*[a-zA-Z])(?=.*[@!#$%&+/=?^_{|}~-])(?=.*[0-9]).{8,}$/.test(passwordInput);
+}
+
+
+
+    </script> 
+
+
+    
